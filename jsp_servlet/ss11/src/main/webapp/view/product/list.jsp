@@ -15,7 +15,6 @@
 </head>
 <body>
 <h1>Trang list product</h1>
-
 <table class="table table-dark">
     <tr>
         <th>STT</th>
@@ -24,6 +23,7 @@
         <th>Price</th>
         <th>Describe</th>
         <th>Producer</th>
+        <th>Edit</th>
         <th>Delete</th>
     </tr>
     <c:forEach var="product" items="${productList}" varStatus="status">
@@ -35,6 +35,9 @@
             <td>${product.describe}</td>
             <td>${product.producer}</td>
             <td>
+                <a class="btn btn-primary" href="/product?action=edit&id=${product.id}">Edit</a>
+            </td>
+            <td>
                 <button type="button" onclick="deleteInfo('${product.id}','${product.name}')" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Delete
                 </button>
@@ -42,7 +45,7 @@
         </tr>
     </c:forEach>
 </table>
-<a class="btn btn-danger" href="/product?action=create">Them moi</a>
+<a class="btn btn-danger" href="/product?action=create">Add new</a>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
