@@ -41,8 +41,13 @@ public class ProductServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = this.productService.findById(id);
         RequestDispatcher requestDispatcher;
-        request.setAttribute("product", product);
-        requestDispatcher = request.getRequestDispatcher("view/product/edit.jsp");
+        if(product == null){
+            requestDispatcher = request.getRequestDispatcher("error-404.jsp");
+        } else {
+            request.setAttribute("product", product);
+            requestDispatcher = request.getRequestDispatcher("view/product/edit.jsp");
+        }
+
         try {
             requestDispatcher.forward(request,response);
         } catch (ServletException e) {
@@ -108,14 +113,18 @@ public class ProductServlet extends HttpServlet {
         String producer = request.getParameter("producer");
         Product product = this.productService.findById(id);
         RequestDispatcher requestDispatcher;
-        product.setName(name);
-        product.setPrice(price);
-        product.setDescribe(describe);
-        product.setProducer(producer);
-        this.productService.update(id, product);
-        request.setAttribute("product",product);
-        request.setAttribute("message", "Product information was updated");
-        requestDispatcher =request.getRequestDispatcher("view/product/edit.jsp");
+        if(product == null){
+            requestDispatcher = request.getRequestDispatcher("error-404.jsp");
+        } else {
+            product.setName(name);
+            product.setPrice(price);
+            product.setDescribe(describe);
+            product.setProducer(producer);
+            this.productService.update(id, product);
+            request.setAttribute("product",product);
+            request.setAttribute("message", "Product information was updated");
+            requestDispatcher =request.getRequestDispatcher("view/product/edit.jsp");
+        }
         try {
             requestDispatcher.forward(request,response);
         } catch (ServletException e) {
